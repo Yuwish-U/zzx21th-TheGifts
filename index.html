@@ -9,19 +9,26 @@
         body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; }
         
         
-         #game-container {
-          position: relative; 
-          width: 90vw;           /* 横向占屏幕 90%，左右留 5% 黑边 */
-          height: 50.625vw;      /* 严格维持 16:9 */
-          max-height: 90vh;      /* 限制高度最多占 90%，上下留 5% 黑边 */
-          max-width: 160vh;      /* 确保在极端屏幕下比例不变形 */
-          margin: auto;          /* 绝对居中 */
+         #game-container { 
+          position: absolute; 
+          top: 50%; 
+          left: 50%; 
+          /* 强制用竖屏的长边(100vh)作为旋转后的宽度，短边作为高度 */
+          width: 100vh; 
+          height: 56.25vh; /* 维持16:9比例 */
+    
+          /* 核心：强制旋转 90 度，并完美居中 */
+          transform: translate(-50%, -50%) rotate(90deg); 
+    
+          /* 确保画面不被切掉 */
+          max-width: 100vw;
+          max-height: 100vw;
     
           overflow: hidden; 
           background-color: #000; 
-         /* 加一点淡淡的白色发光，让你能看清黑边的边界 */
+          /* 加一点淡淡的发光，作为黑边的界限 */
           box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); 
-          }
+         }
 
 
         .comic-filter { filter: grayscale(100%) contrast(130%) brightness(95%); }
@@ -34,22 +41,22 @@
           width: 100%; 
           height: 100%; 
           object-fit: contain; /* 改这里，确保图片完整显示 */
-          z-index: 1; 
         }
-        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 10; display: none; transition: opacity 0.5s ease; }
-        .screen.active { display: block; }
-        
-        .star-effect { position: absolute; color: #fff; font-size: 2vw; pointer-events: none; z-index: 9999; animation: floatUp 1s ease-out forwards; text-shadow: 0 0 5px #fff; }
-        @keyframes floatUp { 0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; } 100% { transform: translate(-50%, -150%) scale(1.5); opacity: 0; } }
-        
-        .hotspot { position: absolute; z-index: 10; cursor: pointer; }
-        #hotspot-drawer-bg { z-index: 5; }
-        .drawer-item { position: absolute; z-index: 15; cursor: pointer; transition: transform 0.3s; }
-        .drawer-item:hover { transform: scale(1.05); }
-        .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 80; cursor: pointer; display: none; }
-
-        /* 手机 UI */
-        #phone-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 25%; aspect-ratio: 320 / 650; background: #000; border-radius: 3vw; box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); z-index: 100; display: none; padding: 0.6vw; border: 2px solid #555; }
+        #phone-modal { 
+         position: absolute; 
+         top: 50%; 
+         left: 50%; 
+         transform: translate(-50%, -50%); 
+         width: 25%; 
+         aspect-ratio: 320 / 650; 
+         background: #000; 
+         border-radius: 3vw; 
+         box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); 
+         z-index: 100; 
+         display: none; 
+         padding: 0.6vw; 
+         border: 2px solid #555; 
+        }
         .phone-close-btn { position: absolute; top: -35px; right: 0; width: 30px; height: 30px; background: rgba(255,255,255,0.2); color: #fff; border-radius: 50%; text-align: center; line-height: 28px; font-size: 20px; cursor: pointer; border: 1px solid rgba(255,255,255,0.5); transition: 0.2s; }
         .phone-close-btn:hover { background: rgba(255,0,0,0.8); }
         .phone-screen { width: 100%; height: 100%; background: #f2f2f7; border-radius: 2.4vw; overflow: hidden; position: relative; display: flex; flex-direction: column; }
