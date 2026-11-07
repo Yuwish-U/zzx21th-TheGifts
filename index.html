@@ -285,10 +285,12 @@
             const zzxAvatar = './assets/zzxtouxiang.jpg';
             const zhAvatar = './assets/zhtouxiang.jpg';
             let msgs = [];
-            if (type === 'erding') {
+if (type === 'erding') {
                 msgs = [
+                    { text: '今天拿回来的快递有一个是给你的礼物', isRight: false },
                     { text: './assets/erdingzzx.jpg', isRight: true, isImg: true },
-                    { text: '喜欢', isRight: true },
+                    { text: '这个吗？', isRight: true },
+                    { text: '谢谢小航我很喜欢🥺', isRight: true },
                     { text: '但是你怎么想起来给我买克罗心了？', isRight: true },
                     { text: './assets/erdingzh.jpg', isRight: false, isImg: true },
                     { text: '一人一只', isRight: false },
@@ -304,7 +306,7 @@
                     { text: '左航', isRight: true },
                     { text: '今年跟我一块过年吧', isRight: true },
                     { text: '我带你去滑雪', isRight: true },
-                    { text: '考虑！', isRight: false }
+                    { text: '你还打算带别人？', isRight: false }
                 ];
             } else if (type === 'guajian') {
                 msgs = [
@@ -313,9 +315,12 @@
                     { text: '对啊', isRight: false },
                     { text: '和我的兄弟们全部都坐上了DD BACKSEAT', isRight: false },
                     { text: '你咋还有空去拼豆', isRight: true },
-                    { text: '以为谁都跟你一样天天在家打游戏啊', isRight: false },
-                    { text: '对了，说到游戏。', isRight: true },
-                    { text: '上号。', isRight: true }
+                    { text: '可能因为我不是天天在家打游戏吧', isRight: false },
+                    { text: '对了，说到打游戏。', isRight: true },
+                    { text: '上号。', isRight: true },
+                    { text: '。。。', isRight: false },
+                    { text: '1', isRight: false },
+                    { text: '礼貌申请甜双。', isRight: true }
                 ];
             }
 
