@@ -6,15 +6,24 @@
     <title>礼物清单</title>
     <style>
         * { box-sizing: border-box; user-select: none; margin: 0; padding: 0; }
-        body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; }
+        /* 强锁默认背景色为浅色，防止部分手机深色模式导致黑屏 */
+        html, body { 
+            width: 100%; height: 100%; overflow: hidden; 
+            background-color: #e0e0e0 !important; 
+            color: #000 !important;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            display: flex; justify-content: center; align-items: center; 
+        }
 
         /* 强制横屏与四周黑边 */
         #game-container { 
             position: absolute; top: 50%; left: 50%; 
             width: 95vh; height: 53.4375vh; 
             transform: translate(-50%, -50%) rotate(90deg); 
-            overflow: hidden; background-color: #000; 
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.15); 
+            overflow: hidden; 
+            background-color: #fff !important; /* 容器也强锁白底 */
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.8); 
+            z-index: 1;
         }
 
         .comic-filter { filter: grayscale(100%) contrast(130%) brightness(95%); }
@@ -32,18 +41,18 @@
         .drawer-item:hover { transform: scale(1.05); }
         .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 20; cursor: pointer; display: none; }
 
-        /* ================= 纯正手机 UI (无侧边栏) ================= */
+        /* ================= 纯正手机 UI ================= */
         #phone-modal { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); 
             width: 35vh; height: 70vh; background: #000; border-radius: 4vh; 
-            box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); 
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); 
             z-index: 100; display: none; padding: 0.8vh; border: 2px solid #555; 
         }
         .phone-close-btn { 
             position: absolute; top: -4vh; right: 0; width: 4vh; height: 4vh; 
             background: rgba(255,255,255,0.2); color: #fff; border-radius: 50%; 
             text-align: center; line-height: 3.8vh; font-size: 2.5vh; cursor: pointer; 
-            border: 1px solid rgba(255,255,255,0.5); 
+            border: 1px solid rgba(255,255,255,0.5); z-index: 101;
         }
         .phone-screen { width: 100%; height: 100%; background: #f2f2f7; border-radius: 3.2vh; overflow: hidden; position: relative; display: flex; flex-direction: column; }
         
@@ -73,18 +82,18 @@
         .chat-input-bar input { flex: 1; height: 60%; border-radius: 1vh; border: 1px solid #ccc; padding: 0 3%; outline: none; background: #fff; font-size: 1.4vh; }
 
         /* 弹窗与特效 */
-        #wechat-notification { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 60%; background: rgba(250, 250, 250, 0.95); backdrop-filter: blur(10px); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 200; padding: 12px; display: flex; gap: 10px; align-items: center; transition: top 0.4s; }
+        #wechat-notification { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 60%; background: rgba(250, 250, 250, 0.95); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 200; padding: 12px; display: flex; gap: 10px; align-items: center; transition: top 0.4s; }
         #wechat-notification.show { top: 10px; }
         #wechat-notification img { width: 40px; height: 40px; border-radius: 6px; }
         #wechat-notification .notify-name { font-size: 14px; font-weight: bold; color: #000; }
         #wechat-notification .notify-msg { font-size: 14px; color: #333; }
         
         /* 纯净日出画面 */
-        #screen-sunrise { background: linear-gradient(to bottom, #ff7e5f, #feb47b, #ffeba7, #4facfe); z-index: 200 !important; }
+        #screen-sunrise { background: linear-gradient(to bottom, #ff7e5f, #feb47b, #ffeba7, #4facfe) !important; z-index: 200 !important; }
         
         /* 结尾图片横着放 */
         #screen-outro { 
-            background: #000; 
+            background: #000 !important; 
             display: flex; 
             flex-direction: row; 
             justify-content: center; 
@@ -170,7 +179,7 @@
             <img src="./assets/men.jpg" class="bg-img comic-filter" id="door-img" alt="门">
         </div>
 
-        <div id="screen-black" class="screen" style="background: #000; z-index: 500;"></div>
+        <div id="screen-black" class="screen" style="background: #000 !important; z-index: 500;"></div>
 
         <!-- 纯净日出 -->
         <div id="screen-sunrise" class="screen" style="display: none;"></div>
@@ -208,7 +217,6 @@
         let chatTimeout = null;
         let chatTarget = ''; 
 
-        // 星星特效
         document.addEventListener('click', function(e) {
             if (document.getElementById('screen-black').classList.contains('active') || document.getElementById('screen-outro').classList.contains('active')) return;
             const star = document.createElement('div'); star.className = 'star-effect'; star.innerHTML = '✨';
@@ -226,11 +234,9 @@
             if (id === 'screen-drawer') document.querySelectorAll('.item-display').forEach(img => img.style.display = 'none');
         }
 
-        // 主界面点击
         document.getElementById('hotspot-drawer').addEventListener('click', (e) => { e.stopPropagation(); showScreen('screen-drawer'); });
         document.getElementById('hotspot-phone-main').addEventListener('click', (e) => { e.stopPropagation(); openPhone('eagle'); });
 
-        // 抽屉点击
         document.getElementById('hotspot-drawer-bg').addEventListener('click', (e) => { showScreen('screen-main'); });
         document.getElementById('item-erding').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('display-erding').style.display = 'block'; document.getElementById('display-shoutao').style.display = 'none'; document.getElementById('display-guajian').style.display = 'none'; });
         document.getElementById('item-shoutao').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('display-shoutao').style.display = 'block'; document.getElementById('display-erding').style.display = 'none'; document.getElementById('display-guajian').style.display = 'none'; });
