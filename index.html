@@ -32,7 +32,7 @@
         .drawer-item:hover { transform: scale(1.05); }
         .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 20; cursor: pointer; display: none; }
 
-        /* ================= 纯正手机 UI (无侧边栏) ================= */
+        /* ================= 纯正手机 UI ================= */
         #phone-modal { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); 
             width: 35vh; height: 70vh; background: #000; border-radius: 4vh; 
@@ -86,10 +86,10 @@
         #screen-outro { 
             background: #000; 
             display: flex; 
-            flex-direction: row; /* 横着排 */
+            flex-direction: row; 
             justify-content: center; 
             align-items: center; 
-            gap: 4vw; /* 图片之间的间距 */
+            gap: 4vw; 
             z-index: 600; 
             height: 100%; 
             width: 100%;
@@ -98,7 +98,7 @@
             opacity: 0; 
             transition: opacity 2s ease-in-out; 
             max-height: 40%; 
-            max-width: 30%; /* 保证三张图都能放下 */
+            max-width: 30%; 
             object-fit: contain;
         }
         .outro-img.show { opacity: 1; }
@@ -109,12 +109,12 @@
         /* 桌面亮起的手机样式 */
         .desk-phone {
             position: absolute;
-            top: 55%; left: 30%; /* 位置自行微调，根据主界面图片 */
+            top: 55%; left: 30%;
             width: 6vw; height: 10vw;
             background: #000;
             border: 2px solid #555;
             border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.8); /* 亮起发光 */
+            box-shadow: 0 0 15px rgba(255,255,255,0.8);
             z-index: 15;
             cursor: pointer;
             display: flex;
@@ -356,12 +356,15 @@
             setTimeout(() => { notify.classList.remove('show'); setTimeout(() => { startDoorSequence(); }, 500); }, 3000);
         }
 
-        let audioStep = 0; 
-        
         function startDoorSequence() {
             showScreen('screen-door'); document.getElementById('door-img').src = './assets/men.jpg';
             const doorImg = document.getElementById('door-img');
-            const handleDoorClick = () => { doorImg.src = './assets/kaimen.jpg'; doorImg.removeEventListener('click', handleDoorClick); doorImg.addEventListener('click', handleEnterBlack); };
+            
+            const handleDoorClick = () => { 
+                doorImg.src = './assets/kaimen.jpg'; 
+                doorImg.removeEventListener('click', handleDoorClick); 
+                doorImg.addEventListener('click', handleEnterBlack); 
+            };
             doorImg.addEventListener('click', handleDoorClick);
             
             function handleEnterBlack(e) {
@@ -371,55 +374,46 @@
                 
                 const hint = document.getElementById('click-hint'); 
                 hint.style.display = 'block'; 
-                hint.innerText = "👆 点击屏幕播放音频";
+                hint.innerText = "👆 点击屏幕播放";
                 
                 const blackScreen = document.getElementById('screen-black');
                 blackScreen.addEventListener('click', function playFirstAudio() {
                     blackScreen.removeEventListener('click', playFirstAudio); 
                     hint.style.display = 'none';
                     
-                    // 播放第一段音频
                     const audioEl = document.getElementById('audio-houzuo'); 
                     audioEl.volume = 1.0; 
-                    audioEl.play().catch(err => console.log("音频播放失败:", err));
+                    audioEl.play().catch(err => console.log(err));
                     
-                    // 4秒后强制切日出
-                    setTimeout(onAudioEnded, 4000);
-                });
-            }
-        }
-
-        function onAudioEnded() {
-            if (audioStep === 0) {
-                audioStep = 1; 
-                showScreen('screen-sunrise');
-                document.getElementById('screen-sunrise').style.display = 'block';
-                
-                const hint = document.getElementById('click-hint'); 
-                hint.style.display = 'block'; 
-                hint.innerText = "👆 点击屏幕播放结局";
-                
-                const sunriseScreen = document.getElementById('screen-sunrise');
-                sunriseScreen.addEventListener('click', function playSecondAudio() {
-                    sunriseScreen.removeEventListener('click', playSecondAudio); 
-                    hint.style.display = 'none'; 
-                    
-                    // 播放第二段音频
-                    const audioEl = document.getElementById('audio-zhkgo'); 
-                    audioEl.volume = 1.0;
-                    audioEl.play().catch(err => console.log("音频播放失败:", err));
-                    
-                    // 4秒后强制切入结尾
+                    // 强制 3.5 秒后进入日出，不管音频放没放完
                     setTimeout(() => {
-                        audioStep = 2; 
-                        showScreen('screen-outro');
-                        document.getElementById('screen-outro').style.display = 'flex'; 
+                        showScreen('screen-sunrise');
+                        document.getElementById('screen-sunrise').style.display = 'block';
                         
-                        // 纯净图片横排渐显
-                        setTimeout(() => document.getElementById('outro-21').classList.add('show'), 500);
-                        setTimeout(() => document.getElementById('outro-daizheai').classList.add('show'), 1500);
-                        setTimeout(() => document.getElementById('outro-kgo').classList.add('show'), 2500);
-                    }, 4000);
+                        const sunriseHint = document.getElementById('click-hint'); 
+                        sunriseHint.style.display = 'block'; 
+                        sunriseHint.innerText = "👆 点击屏幕播放结局";
+                        
+                        const sunriseScreen = document.getElementById('screen-sunrise');
+                        sunriseScreen.addEventListener('click', function playSecondAudio() {
+                            sunriseScreen.removeEventListener('click', playSecondAudio); 
+                            sunriseHint.style.display = 'none'; 
+                            
+                            const audioEl2 = document.getElementById('audio-zhkgo'); 
+                            audioEl2.volume = 1.0;
+                            audioEl2.play().catch(err => console.log(err));
+                            
+                            // 强制 3.5 秒后进入结尾
+                            setTimeout(() => {
+                                showScreen('screen-outro');
+                                document.getElementById('screen-outro').style.display = 'flex'; 
+                                
+                                setTimeout(() => document.getElementById('outro-21').classList.add('show'), 500);
+                                setTimeout(() => document.getElementById('outro-daizheai').classList.add('show'), 1500);
+                                setTimeout(() => document.getElementById('outro-kgo').classList.add('show'), 2500);
+                            }, 3500);
+                        });
+                    }, 3500);
                 });
             }
         }
