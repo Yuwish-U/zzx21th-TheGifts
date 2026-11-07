@@ -9,32 +9,33 @@
         body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; }
         
         /* ======== 强制横屏核心逻辑 ======== */
-    #game-container { 
-        position: relative; 
-        width: 90vw;  /* 改这里，留左右边距 */
-        height: 50.625vw; /* 改这里，维持16:9比例 */
-        max-height: 90vh; /* 改这里，留上下边距 */
-        max-width: 160vh; /* 改这里 */
-        overflow: hidden; 
-        background-color: #000; 
-        box-shadow: 0 0 20px rgba(255,255,255,0.1); /* 加一点边框光，更好看 */
-        transition: transform 0.3s ease;
+        #game-container { 
+         position: relative; 
+         width: 80vw;  /* 原来是 90，改小 */
+         height: 45vw; /* 80 的 56.25% 是 45 */
+         max-height: 80vh; 
+         max-width: 142.22vh; /* 80 的 177.78% */
+         overflow: hidden; 
+         background-color: #000; 
+         box-shadow: 0 0 20px rgba(255,255,255,0.2); 
+         transition: transform 0.3s ease;
+        }
 }
 
-    @media (orientation: portrait) {
-        #game-container {
-        width: 90vh;
-        height: 50.625vh;
-        max-width: none;
-        max-height: none;
-        transform: rotate(90deg) scale(1.5); 
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        margin-top: -25.3125vh; 
-        margin-left: -45vh;
+        @media (orientation: portrait) {
+         #game-container {
+          width: 80vh;
+          height: 45vh; 
+          max-width: none;
+          max-height: none;
+          transform: rotate(90deg) scale(1.5); 
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          margin-top: -22.5vh;  /* 45 的一半 */
+          margin-left: -40vh;   /* 80 的一半 */
     }
-}
+} 
 
         .comic-filter { filter: grayscale(100%) contrast(130%) brightness(95%); }
         .img-highlight { box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); border-radius: 4px; }
@@ -58,10 +59,10 @@
         #hotspot-drawer-bg { z-index: 5; }
         .drawer-item { position: absolute; z-index: 15; cursor: pointer; transition: transform 0.3s; }
         .drawer-item:hover { transform: scale(1.05); }
-        .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 20; cursor: pointer; display: none; }
+        .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 80; cursor: pointer; display: none; }
 
         /* 手机 UI */
-        #phone-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 20vw; min-width: 280px; aspect-ratio: 320 / 650; background: #000; border-radius: 3vw; box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); z-index: 100; display: none; padding: 0.6vw; border: 2px solid #555; }
+        #phone-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 25%; aspect-ratio: 320 / 650; background: #000; border-radius: 3vw; box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); z-index: 100; display: none; padding: 0.6vw; border: 2px solid #555; }
         .phone-close-btn { position: absolute; top: -35px; right: 0; width: 30px; height: 30px; background: rgba(255,255,255,0.2); color: #fff; border-radius: 50%; text-align: center; line-height: 28px; font-size: 20px; cursor: pointer; border: 1px solid rgba(255,255,255,0.5); transition: 0.2s; }
         .phone-close-btn:hover { background: rgba(255,0,0,0.8); }
         .phone-screen { width: 100%; height: 100%; background: #f2f2f7; border-radius: 2.4vw; overflow: hidden; position: relative; display: flex; flex-direction: column; }
