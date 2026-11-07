@@ -62,57 +62,32 @@
         .drawer-item:hover { transform: scale(1.05); }
         .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 20; cursor: pointer; display: none; }
         
-        /* ================= 手机 UI ================= */
-        #phone-modal { 
-         position: absolute; 
-         top: 50%; 
-         left: 50%; 
-         transform: translate(-50%, -50%) rotate(-90deg); 
-         width: 18vh; 
-         height: 38vh; 
-         background: #000; 
-         border-radius: 2.5vh; 
-         box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); 
-         z-index: 100; 
-         display: none; 
-         padding: 0.4vh; 
-         border: 2px solid #555; 
-}
-
-        .phone-close-btn { position: absolute; top: -25px; right: 0; width: 20px; height: 20px; background: rgba(255,255,255,0.2); color: #fff; border-radius: 50%; text-align: center; line-height: 18px; font-size: 16px; cursor: pointer; border: 1px solid rgba(255,255,255,0.5); }
-        .phone-close-btn:hover { background: rgba(255,0,0,0.8); }
-
-        .phone-screen { width: 100%; height: 100%; background: #f2f2f7; border-radius: 2vh; overflow: hidden; position: relative; display: flex; flex-direction: column; }
-
-        .phone-status-bar { height: 5%; background: #f2f2f7; display: flex; justify-content: space-between; align-items: center; padding: 0 5%; font-size: 7px; font-weight: bold; color: #000; }
-
-        .phone-home-screen { flex: 1; display: flex; justify-content: center; align-items: center; background-color: #e0e0e0; }
-        .wechat-icon { width: 20%; aspect-ratio: 1; background: #07c160; border-radius: 1vh; display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .wechat-icon::after { content: "💬"; font-size: 12px; }
-
-        .chat-ui { flex: 1; display: none; flex-direction: column; background: #ededed; height: 100%; }
-
-        .chat-header { height: 8%; background: #f2f2f7; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #ddd; font-size: 9px; font-weight: bold; color: #000; position: relative; }
-        .chat-header .back-btn { position: absolute; left: 5%; font-size: 14px; cursor: pointer; padding: 0 5px; }
-
-        .chat-content { flex: 1; padding: 3%; overflow-y: auto; display: flex; flex-direction: column; gap: 4px; }
- 
-        .msg-row { display: flex; align-items: flex-start; gap: 4px; width: 100%; }
-        .msg-row.right { flex-direction: row-reverse; }
-
-        .avatar { width: 16px; height: 16px; border-radius: 2px; background: #ccc; flex-shrink: 0; object-fit: cover; }
-
-        .msg-bubble { max-width: 75%; padding: 3px 5px; border-radius: 3px; font-size: 8px; line-height: 1.2; word-break: break-all; color: #000; position: relative; }
-        .msg-bubble.left { background: #fff; }
-        .msg-bubble.left::before { content: ''; position: absolute; left: -3px; top: 6px; border-width: 3px 3px 3px 0; border-style: solid; border-color: transparent #fff transparent transparent; }
-        .msg-bubble.right { background: #95ec69; }
-        .msg-bubble.right::before { content: ''; position: absolute; right: -3px; top: 6px; border-width: 3px 0 3px 3px; border-style: solid; border-color: transparent transparent transparent #95ec69; }
-
-        .msg-img { max-width: 45px; border-radius: 2px; }
-
-        .chat-input-bar { height: 8%; background: #f2f2f7; border-top: 1px solid #ddd; display: flex; align-items: center; padding: 0 3%; }
-        .chat-input-bar input { flex: 1; height: 60%; border-radius: 3px; border: 1px solid #ccc; padding: 0 4px; outline: none; background: #fff; font-size: 7px; }
-
+        /* ================= 手机 UI 开始（直接复制粘贴即可） ================= */
+        #phone-modal { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); width: 85vh; height: 40vh; background: #000; border-radius: 4vh; box-shadow: 0 0 50px rgba(0,0,0,0.8), inset 0 0 5px rgba(255,255,255,0.3); z-index: 100; display: none; padding: 1vh; border: 3px solid #555; }
+       .phone-close-btn { position: absolute; top: -40px; right: 10px; width: 35px; height: 35px; background: rgba(255,255,255,0.2); color: #fff; border-radius: 50%; text-align: center; line-height: 32px; font-size: 24px; cursor: pointer; border: 1px solid rgba(255,255,255,0.5); }
+       .phone-close-btn:hover { background: rgba(255,0,0,0.8); }
+       .phone-screen { width: 100%; height: 100%; background: #f2f2f7; border-radius: 3vh; overflow: hidden; position: relative; display: flex; flex-direction: column; }
+       .phone-status-bar { height: 6%; background: #f2f2f7; display: flex; justify-content: space-between; align-items: center; padding: 0 3%; font-size: 12px; font-weight: bold; color: #000; }
+       .phone-home-screen { flex: 1; display: flex; justify-content: center; align-items: center; background-color: #e0e0e0; }
+       .wechat-icon { width: 10%; aspect-ratio: 1; background: #07c160; border-radius: 1.5vh; display: flex; justify-content: center; align-items: center; cursor: pointer; }
+       .wechat-icon::after { content: "💬"; font-size: 24px; }
+       .chat-ui { flex: 1; display: none; flex-direction: row; background: #ededed; height: 100%; }
+       .chat-main { flex: 1; display: flex; flex-direction: column; height: 100%; }
+       .chat-header { height: 10%; background: #f2f2f7; display: flex; align-items: center; justify-content: center; border-bottom: 1px solid #ddd; font-size: 16px; font-weight: bold; color: #000; position: relative; }
+       .chat-header .back-btn { position: absolute; left: 3%; font-size: 24px; cursor: pointer; padding: 0 10px; }
+       .chat-content { flex: 1; padding: 3%; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+       .msg-row { display: flex; align-items: flex-start; gap: 10px; width: 100%; }
+       .msg-row.right { flex-direction: row-reverse; }
+       .avatar { width: 40px; height: 40px; border-radius: 4px; background: #ccc; flex-shrink: 0; object-fit: cover; }
+       .msg-bubble { max-width: 70%; padding: 8px 12px; border-radius: 6px; font-size: 14px; line-height: 1.4; word-break: break-all; color: #000; position: relative; }
+       .msg-bubble.left { background: #fff; }
+       .msg-bubble.left::before { content: ''; position: absolute; left: -6px; top: 14px; border-width: 6px 6px 6px 0; border-style: solid; border-color: transparent #fff transparent transparent; }
+       .msg-bubble.right { background: #95ec69; }
+       .msg-bubble.right::before { content: ''; position: absolute; right: -6px; top: 14px; border-width: 6px 0 6px 6px; border-style: solid; border-color: transparent transparent transparent #95ec69; }
+       .msg-img { max-width: 120px; border-radius: 4px; }
+       .chat-input-bar { height: 10%; background: #f2f2f7; border-top: 1px solid #ddd; display: flex; align-items: center; padding: 0 3%; }
+       .chat-input-bar input { flex: 1; height: 60%; border-radius: 4px; border: 1px solid #ccc; padding: 0 10px; outline: none; background: #fff; font-size: 14px; }
+       /* ================= 手机 UI 结束 ================= */
         
         /* ================= 其他提示 ================= */
         #wechat-notification { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); width: 80%; max-width: 300px; background: rgba(250, 250, 250, 0.95); backdrop-filter: blur(10px); border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.3); z-index: 200; padding: 12px; display: flex; gap: 10px; align-items: center; transition: top 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
@@ -201,16 +176,15 @@
                 <div class="phone-status-bar"><span>9:41</span><span>📶 🔋</span></div>
                 <div class="phone-home-screen" id="phone-home"><div class="wechat-icon" id="wechat-app"></div></div>
                 <div class="chat-ui" id="chat-ui">
-                    <div class="chat-header">
-                        <div class="back-btn" id="chat-back">‹</div>
-                        <span id="chat-title">平安健康皆是福</span>
+                    <div class="chat-main">
+                        <div class="chat-header">
+                            <div class="back-btn" id="chat-back">‹</div>
+                            <span id="chat-title">平安健康皆是福</span>
+                        </div>
+                        <div class="chat-content" id="chat-content"></div>
+                        <div class="chat-input-bar"><input type="text" placeholder="发消息..." readonly></div>
                     </div>
-                    <div class="chat-content" id="chat-content"></div>
-                    <div class="chat-input-bar"><input type="text" placeholder="发消息..." readonly></div>
                 </div>
-            </div>
-        </div>
-    </div>
 
     <script>
         const gameContainer = document.getElementById('game-container');
