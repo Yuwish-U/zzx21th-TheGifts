@@ -8,34 +8,21 @@
         * { box-sizing: border-box; user-select: none; margin: 0; padding: 0; }
         body, html { width: 100%; height: 100%; overflow: hidden; background-color: #000; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; display: flex; justify-content: center; align-items: center; }
         
-        /* ======== 强制横屏核心逻辑 ======== */
-        #game-container { 
-         position: relative; 
-         width: 80vw;  /* 原来是 90，改小 */
-         height: 45vw; /* 80 的 56.25% 是 45 */
-         max-height: 80vh; 
-         max-width: 142.22vh; /* 80 的 177.78% */
-         overflow: hidden; 
-         background-color: #000; 
-         box-shadow: 0 0 20px rgba(255,255,255,0.2); 
-         transition: transform 0.3s ease;
-        }
-}
-
-        @media (orientation: portrait) {
+        
          #game-container {
-          width: 80vh;
-          height: 45vh; 
-          max-width: none;
-          max-height: none;
-          transform: rotate(90deg) scale(1.5); 
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          margin-top: -22.5vh;  /* 45 的一半 */
-          margin-left: -40vh;   /* 80 的一半 */
-    }
-} 
+          position: relative; 
+          width: 90vw;           /* 横向占屏幕 90%，左右留 5% 黑边 */
+          height: 50.625vw;      /* 严格维持 16:9 */
+          max-height: 90vh;      /* 限制高度最多占 90%，上下留 5% 黑边 */
+          max-width: 160vh;      /* 确保在极端屏幕下比例不变形 */
+          margin: auto;          /* 绝对居中 */
+    
+          overflow: hidden; 
+          background-color: #000; 
+         /* 加一点淡淡的白色发光，让你能看清黑边的边界 */
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.15); 
+          }
+
 
         .comic-filter { filter: grayscale(100%) contrast(130%) brightness(95%); }
         .img-highlight { box-shadow: 0 0 15px rgba(255, 255, 255, 0.6); border-radius: 4px; }
