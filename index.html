@@ -32,7 +32,7 @@
         .drawer-item:hover { transform: scale(1.05); }
         .item-display { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); max-width: 60%; max-height: 70%; z-index: 20; cursor: pointer; display: none; }
 
-        /* 纯正手机 UI */
+        /* ================= 纯正手机 UI (无侧边栏) ================= */
         #phone-modal { 
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); 
             width: 35vh; height: 70vh; background: #000; border-radius: 4vh; 
@@ -83,21 +83,50 @@
         #screen-sunrise { background: linear-gradient(to bottom, #ff7e5f, #feb47b, #ffeba7, #4facfe); z-index: 200 !important; }
         
         /* 结尾图片横着放 */
-        #screen-outro { background: #000; display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 4vw; z-index: 600; height: 100%; width: 100%; }
-        .outro-img { opacity: 0; transition: opacity 2s ease-in-out; max-height: 40%; max-width: 30%; object-fit: contain; }
+        #screen-outro { 
+            background: #000; 
+            display: flex; 
+            flex-direction: row; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 4vw; 
+            z-index: 600; 
+            height: 100%; 
+            width: 100%;
+        }
+        .outro-img { 
+            opacity: 0; 
+            transition: opacity 2s ease-in-out; 
+            max-height: 40%; 
+            max-width: 30%; 
+            object-fit: contain;
+        }
         .outro-img.show { opacity: 1; }
         
         #click-hint { display: none; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 24px; z-index: 9999; animation: pulse 1.5s infinite; pointer-events: none; text-shadow: 0 0 10px #000; font-weight: bold; }
         @keyframes pulse { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
 
-        /* 桌面亮起的手机 */
+        /* 桌面亮起的手机样式 */
         .desk-phone {
-            position: absolute; top: 55%; left: 30%; width: 6vw; height: 10vw;
-            background: #000; border: 2px solid #555; border-radius: 6px;
-            box-shadow: 0 0 15px rgba(255,255,255,0.8); z-index: 15; cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
+            position: absolute;
+            top: 55%; left: 30%;
+            width: 6vw; height: 10vw;
+            background: #000;
+            border: 2px solid #555;
+            border-radius: 6px;
+            box-shadow: 0 0 15px rgba(255,255,255,0.8);
+            z-index: 15;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-        .desk-phone::after { content: ''; width: 4vw; height: 9vw; background: #f2f2f7; border-radius: 4px; }
+        .desk-phone::after {
+            content: '';
+            width: 4vw; height: 9vw;
+            background: #f2f2f7;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
@@ -116,10 +145,13 @@
         
         <div id="click-hint">👆 请点击屏幕</div>
 
+        <!-- 主界面 -->
         <div id="screen-main" class="screen active">
             <img src="./assets/zhujiemian.jpg" class="bg-img comic-filter" alt="主界面">
             <div class="hotspot" id="hotspot-drawer" style="bottom: 5%; right: 10%; width: 30%; height: 20%;"></div>
             <img src="./assets/yaoshi.jpg" class="drawer-item img-highlight" id="hidden-key" style="bottom: 15%; left: 8%; width: 4vw; opacity: 0.3; transform: rotate(15deg);" alt="钥匙">
+            
+            <!-- 桌面上亮起的手机实体 -->
             <div class="desk-phone" id="hotspot-phone-main"></div>
         </div>
 
@@ -139,14 +171,18 @@
         </div>
 
         <div id="screen-black" class="screen" style="background: #000; z-index: 500;"></div>
-        <div id="screen-sunrise" class="screen"></div>
 
+        <!-- 纯净日出 -->
+        <div id="screen-sunrise" class="screen" style="display: none;"></div>
+
+        <!-- 横排结尾 -->
         <div id="screen-outro" class="screen">
             <img src="./assets/21.jpg" class="outro-img" id="outro-21" alt="21">
             <img src="./assets/daizheai.jpg" class="outro-img" id="outro-daizheai" alt="带着爱">
             <img src="./assets/kgo.jpg" class="outro-img" id="outro-kgo" alt="kgo">
         </div>
 
+        <!-- 手机弹窗 -->
         <div id="phone-modal">
             <div class="phone-close-btn" id="phone-close-btn">×</div>
             <div class="phone-screen">
@@ -172,6 +208,7 @@
         let chatTimeout = null;
         let chatTarget = ''; 
 
+        // 星星特效
         document.addEventListener('click', function(e) {
             if (document.getElementById('screen-black').classList.contains('active') || document.getElementById('screen-outro').classList.contains('active')) return;
             const star = document.createElement('div'); star.className = 'star-effect'; star.innerHTML = '✨';
@@ -189,9 +226,11 @@
             if (id === 'screen-drawer') document.querySelectorAll('.item-display').forEach(img => img.style.display = 'none');
         }
 
+        // 主界面点击
         document.getElementById('hotspot-drawer').addEventListener('click', (e) => { e.stopPropagation(); showScreen('screen-drawer'); });
         document.getElementById('hotspot-phone-main').addEventListener('click', (e) => { e.stopPropagation(); openPhone('eagle'); });
 
+        // 抽屉点击
         document.getElementById('hotspot-drawer-bg').addEventListener('click', (e) => { showScreen('screen-main'); });
         document.getElementById('item-erding').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('display-erding').style.display = 'block'; document.getElementById('display-shoutao').style.display = 'none'; document.getElementById('display-guajian').style.display = 'none'; });
         document.getElementById('item-shoutao').addEventListener('click', (e) => { e.stopPropagation(); document.getElementById('display-shoutao').style.display = 'block'; document.getElementById('display-erding').style.display = 'none'; document.getElementById('display-guajian').style.display = 'none'; });
