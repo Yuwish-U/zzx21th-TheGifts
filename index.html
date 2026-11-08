@@ -10,7 +10,30 @@
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;color:var(--ink);font-family:"Noto Sans SC","Microsoft YaHei",sans-serif}
 #viewport{position:fixed;inset:0;display:grid;place-items:center;background:#050505}
 #stage{position:relative;width:min(100vw,177.7778vh);height:min(56.25vw,100vh);aspect-ratio:16/9;background:#e9e8e3;overflow:hidden;box-shadow:0 0 0 1px #222}
-@media(orientation:portrait){#stage{position:absolute;width:100vh;height:56.25vw;max-height:none;transform:rotate(90deg);transform-origin:center center}}
+#stage,.screen{touch-action:manipulation}
+.scene-image{object-position:center center}
+
+#audioDock{position:absolute;right:1.8%;bottom:2%;z-index:60;display:flex;gap:6px;align-items:center;max-width:96%}
+#audioDock button{border:1px solid rgba(255,255,255,.65);border-radius:18px;background:rgba(20,20,20,.72);color:#fff;padding:7px 10px;font-family:inherit;font-size:clamp(9px,1vw,12px);font-weight:500;line-height:1.2;letter-spacing:.02em;backdrop-filter:blur(6px);cursor:pointer}
+#audioDock button:active{background:rgba(90,90,90,.9);transform:scale(.97)}
+#audioDock button.playing{background:rgba(255,255,255,.9);color:#171717}
+@media(orientation:portrait){
+  #audioDock{right:2%;bottom:max(12px,env(safe-area-inset-bottom));gap:5px}
+  #audioDock button{padding:7px 9px;font-size:10px}
+  #soundHint{max-width:70%;font-size:10px}
+}
+
+@media(orientation:portrait){
+  #viewport{display:block;background:#050505}
+  #stage{
+    position:absolute;inset:0;
+    width:100vw !important;height:100dvh !important;
+    min-height:100vh;max-height:none;
+    aspect-ratio:auto;transform:none;
+    box-shadow:none;
+  }
+  .scene-image{object-fit:cover}
+}
 .screen{position:absolute;inset:0;display:none;overflow:hidden}
 .screen.active{display:block}
 #mainScreen{background:#eee}
@@ -27,32 +50,43 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
 .drawer-item:hover{transform:scale(1.06)}
 #itemScreen{background:#ecebe7;display:none;place-items:center}
 #itemScreen.active{display:grid}
-#itemLarge{max-width:65%;max-height:78%;object-fit:contain;cursor:pointer;filter:drop-shadow(0 0 9px white)}
+#itemLarge{width:auto;height:auto;max-width:min(48%,560px);max-height:62%;object-fit:contain;cursor:pointer;filter:drop-shadow(0 0 8px rgba(255,255,255,.95))}
 #phoneScreen{background:rgba(0,0,0,.45);display:none;place-items:center;z-index:20}
 #phoneScreen.active{display:grid}
-.phone{height:88%;aspect-ratio:9/18.8;max-width:42%;background:#111;border:5px solid #292929;border-radius:2.3em;padding:7px;box-shadow:0 18px 55px #0009;position:relative}
-.phone-inner{height:100%;width:100%;border-radius:1.8em;overflow:hidden;background:#f7f7f7;position:relative}
+.phone{
+  width:min(78%,520px);
+  height:auto;
+  max-height:76%;
+  aspect-ratio:18.8/9;
+  background:#111;
+  border:6px solid #292929;
+  border-radius:2.5em;
+  padding:8px;
+  box-shadow:0 18px 55px #0009;
+  position:relative;
+}
+.phone-inner{height:100%;width:100%;border-radius:1.9em;overflow:hidden;background:#f7f7f7;position:relative}
 .notch{position:absolute;z-index:3;top:5px;left:50%;transform:translateX(-50%);width:32%;height:15px;border-radius:0 0 12px 12px;background:#111}
-.phone-status{height:7%;padding:10px 13px 0;font-size:clamp(8px,.75vw,12px);display:flex;justify-content:space-between;color:#222}
-.phone-wallpaper{height:93%;background:linear-gradient(145deg,#e8e7e3,#fafafa);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
-.wechat-icon{width:27%;aspect-ratio:1;border-radius:24%;background:#08bd62;display:grid;place-items:center;color:white;font-size:clamp(25px,3vw,44px);cursor:pointer;box-shadow:0 5px 15px #0002}
+.phone-status{height:10%;padding:8px 18px 0;font-size:clamp(10px,1vw,13px);display:flex;justify-content:space-between;color:#222}
+.phone-wallpaper{height:90%;background:linear-gradient(145deg,#e8e7e3,#fafafa);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
+.wechat-icon{width:15%;min-width:48px;aspect-ratio:1;border-radius:24%;background:#08bd62;display:grid;place-items:center;color:white;font-size:clamp(25px,3vw,44px);cursor:pointer;box-shadow:0 5px 15px #0002}
 .app-label{font-size:clamp(9px,.9vw,13px);color:#333}
 .phone-close{position:absolute;right:-2.4em;top:0;color:white;background:#111a;border:1px solid #fff6;border-radius:50%;width:2em;height:2em;cursor:pointer;font-size:16px}
 .chat-app{height:100%;display:none;flex-direction:column;background:#ededed}
 .chat-app.show{display:flex}
-.chat-top{height:12%;padding:24px 10px 8px;background:#f7f7f7;border-bottom:1px solid #ddd;text-align:center;font-size:clamp(10px,1vw,15px);font-weight:600;position:relative}
-.chat-top small{display:block;font-weight:400;color:#777;font-size:.72em;margin-top:3px}
-.back-chat{position:absolute;left:9px;top:26px;border:0;background:none;font-size:1.3em}
-.chat-messages{flex:1;overflow:auto;padding:12px 9px;display:flex;flex-direction:column;gap:12px}
-.msg-row{display:flex;gap:6px;align-items:flex-start;max-width:94%}
+.chat-top{height:16%;min-height:48px;padding:20px 10px 7px;background:#f7f7f7;border-bottom:1px solid #ddd;text-align:center;font-size:clamp(13px,1.25vw,17px);font-weight:600;position:relative}
+.chat-top small{display:block;font-weight:400;color:#888;font-size:.72em;margin-top:2px}
+.back-chat{position:absolute;left:12px;top:19px;border:0;background:none;font-size:1.5em;color:#333}
+.chat-messages{flex:1;min-height:0;overflow:auto;padding:12px 16px;display:flex;flex-direction:column;gap:11px}
+.msg-row{display:flex;gap:9px;align-items:flex-start;max-width:88%}
 .msg-row.right{align-self:flex-end;flex-direction:row-reverse}
-.avatar{width:27px;height:27px;border-radius:5px;object-fit:cover;background:#ccc;flex:none}
-.msg-content{display:flex;flex-direction:column;gap:3px;max-width:78%}
-.msg-name{font-size:clamp(7px,.68vw,10px);color:#888}
-.bubble{padding:7px 9px;border-radius:5px;background:white;font-size:clamp(8px,.82vw,12px);line-height:1.5;overflow-wrap:anywhere;box-shadow:0 1px 1px #0001}
-.right .bubble{background:#9eea7a}
-.chat-photo{max-width:100%;max-height:125px;object-fit:contain;border-radius:5px;background:#ddd}
-.chat-footer{height:9%;background:#f7f7f7;border-top:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#888;font-size:clamp(8px,.7vw,10px)}
+.avatar{width:clamp(32px,4.2vw,42px);height:clamp(32px,4.2vw,42px);border-radius:7px;object-fit:cover;background:#ccc;flex:none}
+.msg-content{display:flex;flex-direction:column;gap:4px;max-width:min(78%,390px)}
+.msg-name{font-size:clamp(10px,.85vw,12px);color:#888;line-height:1.2}
+.bubble{padding:9px 12px;border-radius:9px;background:#fff;font-size:clamp(12px,1.05vw,15px);line-height:1.55;overflow-wrap:anywhere;box-shadow:0 1px 2px #00000012;color:#242424}
+.right .bubble{background:#a6e58c}
+.chat-photo{width:auto;height:auto;max-width:min(100%,150px);max-height:112px;object-fit:contain;border-radius:7px;background:#ddd;display:block}
+.chat-footer{height:12%;min-height:34px;background:#f7f7f7;border-top:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#888;font-size:clamp(10px,.8vw,12px)}
 .tap-tip{position:absolute;bottom:10%;left:50%;transform:translateX(-50%);background:#111b;color:white;padding:7px 12px;border-radius:20px;font-size:clamp(8px,.75vw,11px);white-space:nowrap;pointer-events:none}
 #groupScreen{background:#eee;z-index:10}
 .group-bg{position:absolute;inset:0;background:linear-gradient(#f7f7f7 0 13%,#ededed 13%);display:flex;flex-direction:column}
@@ -60,8 +94,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
 .group-list{flex:1;padding:3% 8%;display:flex;flex-direction:column;gap:4%;overflow:hidden}
 .group-message{display:flex;gap:12px;align-items:flex-start;max-width:75%}
 .group-message.me{align-self:flex-end;flex-direction:row-reverse}
-.group-message img{width:5.3vw;height:5.3vw;max-width:54px;max-height:54px;object-fit:cover;border-radius:7px;background:#ccc}
-.group-bubble{background:#fff;padding:10px 14px;border-radius:8px;font-size:clamp(12px,1.25vw,18px);line-height:1.5;box-shadow:0 1px 2px #0001}
+.group-message img{width:clamp(30px,4.5vh,44px);height:clamp(30px,4.5vh,44px);object-fit:cover;border-radius:7px;background:#ccc;flex:none}
+.group-bubble{background:#fff;padding:8px 11px;border-radius:8px;font-size:clamp(11px,1.55vh,15px);line-height:1.5;box-shadow:0 1px 2px #0001}
 .group-message.me .group-bubble{background:#a8e58e}
 .group-name{font-size:clamp(9px,.8vw,12px);color:#888;margin-bottom:4px}
 #transitionScreen{background:#000;z-index:15}
@@ -77,7 +111,28 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
 #toast{position:absolute;z-index:50;pointer-events:none;opacity:0;color:#fff;font-size:24px;text-shadow:0 0 9px #fff,0 0 18px #fff;transition:opacity .25s}
 #toast.show{opacity:1}
 #soundHint{position:absolute;right:2%;top:2%;z-index:40;color:#fff;background:#0009;padding:6px 10px;border-radius:20px;font-size:11px}
-@media(max-height:420px){.phone{height:91%}.chat-messages{gap:7px}.bubble{padding:5px 7px}}
+@media(orientation:portrait){
+  .phone{width:min(82%,640px);max-height:64%;aspect-ratio:18.8/9;border-width:5px;border-radius:2em}
+  .phone-close{right:-1.9em;top:-1.9em}
+  .chat-messages{padding:10px 15px;gap:9px}
+  .msg-row{gap:8px;max-width:90%}
+  .avatar{width:clamp(30px,4.2vh,38px);height:clamp(30px,4.2vh,38px);border-radius:7px}
+  .msg-content{max-width:78%}
+  .bubble{font-size:clamp(11px,1.55vh,14px);padding:7px 10px;line-height:1.48;border-radius:8px}
+  .msg-name{font-size:clamp(9px,1.15vh,11px)} 
+  .chat-photo{max-width:min(100%,118px);max-height:82px}
+  .group-list{padding:3% 6%;gap:3%}
+  .group-message{gap:8px;max-width:88%}
+  .group-bubble{font-size:clamp(11px,1.45vh,14px);padding:7px 10px}
+  .group-name{font-size:10px}
+  .chat-top{min-height:42px;padding-top:16px}
+  .back-chat{top:13px}
+}
+@media(max-height:420px){
+  .phone{width:min(78%,620px);max-height:88%}
+  .chat-messages{gap:7px}
+  .bubble{padding:7px 9px}
+}
 </style>
 </head>
 <body>
@@ -145,7 +200,14 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
     <div class="sun-caption">21 岁 · 海边日出</div>
   </section>
   <div id="toast">✦ ✧ ✨</div>
-  <div id="soundHint">首次播放音频时，请允许浏览器播放声音</div>
+  <div id="soundHint">首次点击页面后播放背景音乐；也可使用右下角音频按钮</div>
+  
+<div id="audioDock" aria-label="音频播放控制">
+  <button type="button" data-audio="bgm" title="背景音乐">♫ 背景</button>
+  <button type="button" data-audio="voice1" title="播放 houzuo.mp3">① 后奏</button>
+  <button type="button" data-audio="voice2" title="播放 zhkgo.mp3">② 结尾</button>
+</div>
+
 </div>
 </div>
 
@@ -230,11 +292,42 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
   }
   $("stage").addEventListener("pointerdown",e=>sparkle(e));
 
-  function playBgm(){
-    const a=$("bgm"); if(a.paused) a.play().catch(()=>{});
-    $("soundHint").style.display="none";
+  let bgmStarted = false;
+  function playTrack(id){
+    const audio=$(id);
+    if(!audio) return;
+    if(id==="bgm") audio.volume=.42;
+    else audio.volume=1;
+    audio.play().then(()=>{
+      document.querySelectorAll('#audioDock button').forEach(b=>b.classList.toggle('playing',b.dataset.audio===id));
+      $("soundHint").style.display="none";
+    }).catch(()=>{
+      $("soundHint").textContent="播放未启动，请再点一次对应音频按钮";
+      $("soundHint").style.display="block";
+    });
   }
+  function playBgm(){
+    if(bgmStarted) return;
+    bgmStarted=true;
+    playTrack("bgm");
+  }
+  // 浏览器禁止无手势自动播放：进入网页后的首次点击启动背景音乐。
   document.addEventListener("pointerdown",playBgm,{once:true});
+  document.querySelectorAll("#audioDock button").forEach(button=>{
+    button.addEventListener("pointerdown",e=>e.stopPropagation());
+    button.addEventListener("click",e=>{
+      e.stopPropagation();
+      const id=button.dataset.audio, audio=$(id);
+      if(audio.paused){playTrack(id);}
+      else {audio.pause();button.classList.remove("playing");}
+    });
+  });
+  ["bgm","voice1","voice2"].forEach(id=>{
+    $(id).addEventListener("ended",()=>{
+      const button=document.querySelector(`#audioDock button[data-audio="${id}"]`);
+      if(button) button.classList.remove("playing");
+    });
+  });
 
   $("drawerHotspot").onclick=()=>show("drawerScreen");
   $("keyHotspot").onclick=()=>{ show("mainScreen"); $("soundHint").textContent="桌面角落的小小钥匙"; $("soundHint").style.display="block"; setTimeout(()=>$("soundHint").style.display="none",1600); };
@@ -335,8 +428,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050505;col
     if($("transitionImage").src.includes("men.jpg")) showTransition("assets/kaimen.jpg");
     else if($("transitionImage").src.includes("kaimen.jpg")){
       show("blackScreen"); $("blackText").textContent="";
-      $("voice1").currentTime=0; $("voice1").play().catch(()=>{});
-      $("voice1").onended=()=>{show("sunriseScreen"); $("voice2").currentTime=0; $("voice2").play().catch(()=>{});};
+      $("voice1").currentTime=0; playTrack("voice1");
+      $("voice1").onended=()=>{show("sunriseScreen"); $("voice2").currentTime=0; playTrack("voice2");};
     }
   };
   $("sunriseScreen").onclick=()=>{
